@@ -1,0 +1,39 @@
+-- SELECT HomePhone, LastName
+-- FROM Employees
+-- WHERE ReportsTo IS NULL
+
+-- SELECT CompanyName, City, Country, Address
+-- FROM Customers
+
+-- SELECT UnitPrice, ProductName
+-- FROM Products
+
+-- SELECT CategoryName, Description
+-- FROM Categories
+
+-- SELECT CompanyName, HomePage
+-- FROM Suppliers
+
+-- SELECT CompanyName, City, Country, Address
+-- FROM Customers
+-- WHERE City = 'London'
+
+-- SELECT CompanyName, City, Country, Address
+-- FROM Customers
+-- WHERE Country IN ('Spain', 'France')
+
+-- SELECT UnitPrice, ProductName
+-- FROM Products
+-- WHERE UnitPrice BETWEEN 20.00 AND 30.00
+
+-- SELECT CategoryID, ProductName
+-- FROM Products
+-- WHERE CategoryID IN (SELECT CategoryID FROM Categories WHERE CategoryName = 'Meat/Poultry')
+
+-- SELECT SupplierID, ProductName, UnitsInStock
+-- FROM Products
+-- WHERE SupplierID IN (SELECT SupplierID FROM Suppliers WHERE CompanyName = 'Tokyo Traders')
+
+-- SELECT SupplierID, ProductName, UnitsInStock
+-- FROM Products
+-- WHERE UnitsInStock = '0'
