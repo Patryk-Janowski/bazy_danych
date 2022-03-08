@@ -1,0 +1,22 @@
+--- LAB2
+
+-- SELECT *
+-- FROM Products
+-- WHERE QuantityPerUnit LIKE '%bottles%'
+
+-- SELECT OrderID, OrderDate, CustomerID, RequiredDate
+-- FROM Orders
+-- WHERE ShipCountry = 'Argentina' AND ShippedDate IS NULL
+-- ORDER By RequiredDate
+
+-- SELECT *
+-- From Customers
+-- WHERE Country In ('Italy', 'Japan')
+-- ORDER BY CompanyName
+
+-- SELECT CAST(SUM(UnitPrice * Quantity * (1 - Discount)) AS DECIMAL(10, 2))
+-- From [Order Details]
+-- WHERE OrderID = 10250
+
+-- Select CompanyName,  ISNULL(Phone, ' None') + ISNULL(Fax, ' None') as all_data
+-- FROM Suppliers
