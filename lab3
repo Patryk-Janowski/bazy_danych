@@ -1,0 +1,45 @@
+select COUNT(UnitPrice) as ilosc
+from Products
+where UnitPrice BETWEEN 10 and 20
+
+select MAX(UnitPrice) as max
+from Products
+where UnitPrice < 20
+
+select MAX(UnitPrice) as max, MIN(UnitPrice) as min, AVG(UnitPrice) as avg 
+from Products
+WHERE QuantityPerUnit LIKE '%bottles%'
+
+select UnitPrice, ProductName, AVG(UnitPrice) as average
+from Products
+GROUP BY ProductName
+HAVING UnitPrice > AVG(UnitPrice)
+
+select OrderID, MAX(UnitPrice) as max
+from [Order Details]
+GROUP BY OrderID
+
+select TOP 5 ShipVia, COUNT(*) as num_of_orders
+from [Orders]
+GROUP BY ShipVia
+ORDER By num_of_orders
+
+
+select OrderID
+from [Order Details]
+GROUP BY OrderID
+HAVING SUM(Quantity) > 5
+-- ORDER By num_of_orders
+
+select CustomerID, COUNT(OrderID) as num_of_orders
+from [Orders]
+WHERE year(OrderDate) = 1998
+GROUP BY CustomerID
+HAVING COUNT(OrderID) > 8
+ORDER By num_of_orders
+
+SELECT productid, orderid, SUM(quantity) AS total_quantity
+ FROM orderhist
+ GROUP BY productid, orderid
+ WITH CUBE
+ ORDER BY productid, orderid
