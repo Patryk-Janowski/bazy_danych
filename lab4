@@ -1,0 +1,38 @@
+Select ProductName, CompanyName
+From Products
+JOIN Suppliers
+ON Products.SupplierID = Suppliers.SupplierID
+
+
+Select ProductName, CompanyName
+From Suppliers
+JOIN Products
+ON Products.SupplierID = Suppliers.SupplierID
+
+
+Select ProductName, UnitPrice, Address, Country, City
+From Products
+JOIN Suppliers
+ON Products.SupplierID = Suppliers.SupplierID
+WHERE UnitPrice BETWEEN 20 and 30
+
+
+Select DISTINCT Customers.CompanyName, Address, Country, City
+from Customers
+Left outer join Orders
+ON Orders.CustomerID = Customers.CustomerID
+Where year(OrderDate) = 1997
+
+
+Select DISTINCT Customers.CompanyName, Address, Country, City
+from Customers
+Left outer join Orders
+ON Orders.CustomerID = Customers.CustomerID and year(Orders.OrderDate) = 1997
+Where Orders.OrderID is NULL
+
+
+Select DISTINCT CompanyName, Address, Country, City
+from Products
+join Suppliers
+ON Products.SupplierID = Suppliers.SupplierID
+Where Products.UnitsInStock = 0
