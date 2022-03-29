@@ -1,0 +1,58 @@
+-- select *
+-- from Suppliers
+-- CROSS JOIN Shippers
+
+-- select OrderDate, ProductName
+-- from [Order Details]
+-- JOIN [Products]
+-- On Products.ProductID = [Order Details].[ProductID]
+-- JOIN Orders
+-- On [Order Details].[OrderID] = Orders.OrderID
+-- Where OrderDate = '1996-07-08'
+
+-- select ProductName, UnitPrice, CategoryName, Suppliers.CompanyName, Suppliers.Address, Suppliers.City
+-- from Products
+-- JOIN Suppliers
+-- ON Products.SupplierID = Suppliers.SupplierID
+-- Join Categories
+-- On Products.CategoryID = Categories.CategoryID
+-- WHERE (UnitPrice BETWEEN 20 and 30) and CategoryName = 'Meat/Poultry'
+
+-- select ProductName, UnitPrice, CategoryName, Suppliers.CompanyName, Suppliers.Address, Suppliers.City
+-- from Products
+-- JOIN Suppliers
+-- ON Products.SupplierID = Suppliers.SupplierID
+-- Join Categories
+-- On Products.CategoryID = Categories.CategoryID
+-- WHERE CategoryName = 'Confections'
+
+-- select Customers.CompanyName, Customers.Phone ,Shippers.CompanyName as shppier_name, orders.OrderDate
+-- from orders
+-- join Customers
+-- on orders.CustomerID = Customers.CustomerID
+-- join Shippers
+-- on orders.ShipVia = shippers.ShipperID
+-- where Shippers.CompanyName = 'United Package' and year(orders.OrderDate) = 1997
+
+-- use library
+-- select firstname, lastname, birth_date, street, city, [state]
+-- from juvenile
+-- join member
+-- on juvenile.member_no = member.member_no
+-- join adult
+-- on adult.member_no = juvenile.adult_member_no
+
+-- select e1.FirstName, e1.LastName, e2.FirstName, e2.LastName
+-- from Employees as e1
+-- LEFT JOIN Employees as e2
+-- ON e1.ReportsTo = e2.EmployeeID
+ 
+--  use library
+--  select count(juvenile.adult_member_no), juvenile.adult_member_no, member.firstname, member.lastname, adult.[state]
+--  from member
+--  join adult
+--  on member.member_no = adult.member_no and adult.[state] = 'AZ'
+--  join juvenile
+--  on juvenile.adult_member_no = adult.member_no
+--  GROUP by juvenile.adult_member_no, member.firstname, member.lastname, adult.[state]
+--  HAVING count(juvenile.adult_member_no) > 2
