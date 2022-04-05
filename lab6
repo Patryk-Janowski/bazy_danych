@@ -1,0 +1,63 @@
+-- select max(Quantity), ProductName
+-- from [Order Details]
+-- JOIN Products
+-- ON Products.ProductID = [Order Details].ProductID
+-- GROUP BY [Order Details].ProductID, ProductName
+
+-- SELECT FirstName, LastName FROM
+-- [Employees] as e
+-- WHERE EXISTS 
+-- (SELECT EmployeeID from Orders as o
+-- WHERE OrderDate = '9/5/97'
+-- and e.EmployeeID = o.EmployeeID
+-- )
+
+-- WITH t as
+-- (
+-- SELECT CategoryID, AVG(unitprice) average
+-- FROM products
+-- GROUP BY CategoryID
+-- )
+
+-- SELECT ProductName, UnitPrice, average, t.CategoryID
+-- FROM t JOIN Products ON
+-- t.CategoryID = Products.CategoryID
+-- WHERE Products.UnitPrice > average
+
+
+-- Dla kazdego pracownika (imie nazwisko) suma obsluzonych zamowien uwzgledniajac cene za przesylke
+
+-- WITH es as
+-- (
+--     SELECT SUM([Order Details].UnitPrice*[Order Details].Quantity) order_sum, Freight, [Orders].EmployeeID, Orders.OrderID
+--     From Orders
+--     JOIN [Order Details]
+--     ON [Order Details].OrderID = Orders.OrderID
+--     GROUP BY EmployeeID, Freight, [Orders].EmployeeID, Orders.OrderID
+-- )
+
+-- SELECT FirstName, LastName, order_sum + Freight as total, es.OrderID
+-- FROM Employees
+-- JOIN es ON es.EmployeeID = Employees.EmployeeID
+-- ORDER BY total DESC
+
+
+-- WITH eoy as
+-- (
+--     SELECT SUM([Order Details].UnitPrice*[Order Details].Quantity) order_sum, [Orders].EmployeeID, Discount, year(OrderDate) as y
+--     From Orders
+--     JOIN [Order Details]
+--     ON [Order Details].OrderID = Orders.OrderID
+--     GROUP BY EmployeeID, [Orders].EmployeeID, Orders.OrderID, Discount, OrderDate
+-- )
+
+-- SELECT TOP 5 FirstName, LastName, SUM(order_sum * (1-Discount)) as total, eoy.EmployeeID
+-- FROM Employees
+-- JOIN eoy ON eoy.EmployeeID = Employees.EmployeeID
+-- WHERE eoy.y = 1997
+-- GROUP BY Employees.EmployeeID, FirstName, LastName, order_sum, Discount, eoy.EmployeeID
+-- ORDER BY total DESC
+
+
+
+
