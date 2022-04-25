@@ -1,0 +1,88 @@
+-- Podaj listę dzieci będących członkami biblioteki, które w dniu '2001-12-14' zwróciły do biblioteki 
+-- książkę o tytule 'Walking'
+
+-- SELECT m.firstname, m.lastname, lh.in_date, t.title FROM loanhist as lh
+-- JOIN title as t ON lh.title_no = t.title_no
+-- JOIN juvenile as j on lh.member_no = j.member_no
+-- JOIN member as m on j.member_no = m.member_no
+-- WHERE title = 'Walking' and cast(lh.in_date as date) = '2001-12-14'
+
+
+-- Pokaż nazwy produktów, które nie by z kategorii 'Beverages' które nie były kupowane w 
+-- okresie od '1997.02.20' do '1997.02.25'. Dla każdego takiego produktu podaj jego nazwę, 
+-- nazwę dostawcy (supplier), oraz nazwę kategorii.
+-- Zbiór wynikowy powinien zawierać nazwę produktu, nazwę dostawcy oraz nazwę kategorii.
+
+-- With ords AS
+-- (
+--     SELECT * FROM Orders
+--     WHERE OrderDate < '1997.02.20' or OrderDate > '1997.02.25'
+-- )
+
+-- SELECT Distinct p.ProductName, s.CompanyName, c.CategoryName from ords
+-- JOIN [Order Details] as od on ords.OrderID = od.OrderID
+-- JOIN Products as p on od.ProductID = p.ProductID
+-- JOIN Categories as c on p.CategoryID = c.CategoryID
+-- JOIN Suppliers as s on p.SupplierID = s.SupplierID
+-- WHERE c.CategoryName <> 'Beverages'
+
+-- Podaj liczbę̨ zamówień oraz wartość zamówień (uwzględnij opłatę za przesyłkę) obsłużonych 
+-- przez każdego pracownika w lutym 1997. Za datę obsłużenia zamówienia należy uznać datę 
+-- jego złożenia (orderdate). Jeśli pracownik nie obsłużył w tym okresie żadnego zamówienia, to 
+-- też powinien pojawić się na liście (liczba obsłużonych zamówień oraz ich wartość jest w takim 
+-- przypadku równa 0).
+-- Zbiór wynikowy powinien zawierać: imię i nazwisko pracownika, liczbę obsłużonych
+-- zamówień, wartość obsłużonych zamówień
+
+-- with emp as 
+-- (
+-- SELECT e.EmployeeID, sum(Freight + UnitPrice*Quantity*(1-Discount)) as su, COUNT(0) as c from Orders as o
+-- JOIN Employees as e on o.EmployeeID = e.EmployeeID
+-- LEFT JOIN [Order Details] as od on od.OrderID = o.OrderID
+-- Where YEAR(cast(o.OrderDate as date)) = YEAR('1997') and
+-- MONTH(cast(o.OrderDate as date)) = MONTH('1997-02-01')
+-- GROUP by e.EmployeeID
+-- )
+
+-- select e.FirstName, e.LastName, ISNULL(su, 0) as total, ISNULL(c, 0) as cnt from emp
+-- RIGHT OUTER JOIN Employees as e on emp.EmployeeID = e.EmployeeID
+
+-- Podaj listę dzieci będących członkami biblioteki, dla każdego z tych dzieci podaj:
+-- Imię, nazwisko, imię rodzica (opiekuna), nazwisko rodzica (opiekuna)
+
+-- with adt AS
+-- (
+--     SELECT m.firstname, m.lastname, m.member_no from adult as a
+--     JOIN member as m on a.member_no = m.member_no
+-- )
+-- SELECT m.firstname, m.lastname, adt.firstname as imie_r, adt.lastname as nazwisko_r from juvenile as j
+-- JOIN member as m on j.member_no = m.member_no
+-- JOIN adt on adt.member_no = j.adult_member_no
+
+-- Wyświetl wszystkich pracowników, którzy nie mają podwładnych. Dla każdego z takich 
+-- pracowników podaj wartość obsłużonych przez niego zamówień w 1997r (sama wartość
+-- zamówień bez opłaty za przesyłkę
+
+
+-- with emps AS
+-- (
+--     SELECT * from Employees as e
+--     Where e.EmployeeID not in (select distinct isnull(ReportsTo, 0) from Employees)
+-- )
+
+-- SELECT sum(UnitPrice*Quantity*(1-Discount)) as total, FirstName, LastName
+-- from orders as o
+-- JOIN [Order Details] as od on o.OrderID = od.OrderID
+-- JOIN emps on emps.EmployeeID = o.EmployeeID
+-- WHERE YEAR(o.OrderDate) = YEAR('1997')
+-- GROUP BY emps.EmployeeID, FirstName, LastName
+
+-- Wyświetl nr zamówień złożonych w marcu 1997, które nie zawierały produktów z kategorii 
+-- "confections"
+
+-- SELECT count(distinct o.OrderID) from [Order Details] as od
+-- JOIN Orders as o on od.OrderID = o.OrderID
+-- JOIN Products as p on p.ProductID = od.ProductID
+-- JOIN Categories as c on c.CategoryID = p.CategoryID
+-- WHERE CategoryName <> 'Confections' and YEAR(o.OrderDate) = YEAR('1997')
+-- and MONTH(o.OrderDate) = MONTH('1997-03-01')
